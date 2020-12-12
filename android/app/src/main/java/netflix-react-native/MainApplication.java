@@ -31,6 +31,11 @@ import javax.annotation.Nullable;
 
 public class MainApplication extends Application implements ReactApplication {
 
+    private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
+            new BasePackageList().getPackageList(),
+            null
+    );
+
   private final ReactNativeHost mReactNativeHost =
           new ReactNativeHost(this) {
             @Override
@@ -43,8 +48,8 @@ public class MainApplication extends Application implements ReactApplication {
               @SuppressWarnings("UnnecessaryLocalVariable")
               List<ReactPackage> packages = new PackageList(this).getPackages();
               // Packages that cannot be autolinked yet can be added manually here, for example:
-              // packages.add(new MyReactNativePackage());
-              return packages;
+                packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+                return packages;
             }
 
             @Override
